@@ -1,0 +1,35 @@
+{
+    "name": "pyex",
+    "active": 1,
+    "priority": 0,
+    "version": 0,
+    "entry_ppool": "pyex",
+    "start_scene": "start",
+    "scenes":[
+        {
+            "name" : "start",
+            "cook": [
+                {"num":1,
+                 "cmd":"system::local::start_pool::pyex::1"
+                },
+                {"num":2,
+                 "cmd":"system::local::start_all_workers::pyex::-m 20m 139.59.151.111:5000/pyex:0.1.0::/usr/bin/python hello.py 1 ::pyex.log::10000"
+                }
+ 
+            ]
+
+        },
+
+        {
+            "name" : "stop",
+            "cook": [
+                {"num":1,
+                 "cmd":"system::local::stop_pool::pyex"
+                }
+
+            ]
+
+        }
+    ]
+
+}
