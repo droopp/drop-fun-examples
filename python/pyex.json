@@ -13,7 +13,7 @@
                  "cmd":"system::local::start_pool::pyex::1"
                 },
                 {"num":2,
-                 "cmd":"system::local::start_all_workers::pyex::-m 20m 139.59.151.111:5000/pyex:0.1.0::/usr/bin/python hello.py 1 ::pyex.log::10000"
+                 "cmd":"system::local::start_all_workers::pyex::-m 20m pyex:0.1.0::/usr/bin/python pyex.py 1 ::pyex.log::10000"
                 }
  
             ]
