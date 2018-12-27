@@ -1,0 +1,5 @@
+name: pyex
+fun:
+    - name: pyex
+      image: pyex:0.1.0
+      cmd: /usr/bin/python pyex.py 1
