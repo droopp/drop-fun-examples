@@ -1,0 +1,5 @@
+name: nodeex
+func:
+    - name: nodeex
+      image: nodeex:0.1.0
+      cmd: /usr/bin/nodejs nodeex.js
