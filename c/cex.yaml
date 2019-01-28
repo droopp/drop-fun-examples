@@ -1,0 +1,5 @@
+name: cex
+func:
+    - name: cex
+      image: cex:0.1.0
+      cmd: /usr/bin/cex
