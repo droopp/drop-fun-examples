@@ -1,0 +1,13 @@
+#!/bin/bash
+
+# read
+while read msg
+do
+
+  # log
+  >&2 echo "msg read $msg"
+
+  #send
+  echo "$msg"
+
+done

@@ -1,0 +1,5 @@
+name: goex
+func:
+    - name: goex
+      image: goex:0.1.0
+      cmd: ./goex
