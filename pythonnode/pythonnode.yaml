@@ -1,0 +1,15 @@
+name: pythonnode
+func:
+    - name: pyex
+      image: pyex:0.1.0
+      cmd: /usr/bin/python pyex.py 0
+      - sub: nodeex
+        filter: no
+        type: sone
+
+    - name: nodeex
+      image: nodeex:0.1.0
+      cmd: /usr/bin/nodejs nodeex.js
+      - sub: pyex
+        filter: no
+        type: sone
