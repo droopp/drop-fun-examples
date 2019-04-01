@@ -1,0 +1,26 @@
+#!/bin/bash
+
+# validator function
+# $1 - pattern (example [0-9]{7},* )
+
+# timestamp() {
+# }
+
+# read
+while read msg
+do
+
+  # log
+  >&2 echo  $(date +"%T") "msg read $msg"
+
+  if [[ ${msg} =~ $1 ]] ; 
+ 
+    then 
+        echo "tag:matched,"$msg;
+
+  else
+        #send
+        echo "$msg"
+  fi
+
+done
