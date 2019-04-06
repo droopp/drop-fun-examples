@@ -1,7 +1,69 @@
-#!/bin/bash
+#!/usr/bin/python
 
-while true; do
-    nc $1 $2
-    # sleep 5
-    # exit 0
-done
+#
+# xml maker
+# $1 number of dublicate
+#
+
+
+import sys
+import time
+import socket
+
+# API
+
+
+def read():
+    msg = sys.stdin.readline()
+    return msg.strip()
+
+
+def log(m):
+    sys.stderr.write("{}: {}\n".format(time.time(), m))
+    sys.stderr.flush()
+
+
+def send(m):
+    sys.stdout.write("{}\n".format(m))
+    sys.stdout.flush()
+
+
+# Process - actor
+#  read - recieve message from world
+#  send - send message to world
+#  log  -  logging anything
+
+
+def main(host, port):
+
+    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
+    # Connect the socket to the port where the server is listening
+    server_address = (host, port)
+    sock.connect(server_address)
+
+    while 1:
+
+        msg = read()
+        if not msg:
+            break
+
+        log("get message: " + msg)
+
+        try:
+
+            sock.sendall("{}\n".format(msg))
+
+            send("ok")
+
+        except Exception as e:
+            log(e)
+            send(msg)
+            sock.close()
+
+if __name__ == "__main__":
+    try:
+        main(sys.argv[1], int(sys.argv[2]))
+
+    except:
+        time.sleep(2)
