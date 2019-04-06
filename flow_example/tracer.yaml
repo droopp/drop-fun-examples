@@ -1,0 +1,31 @@
+name: tracer
+func:
+    - name: tcpsender
+      image: tcpsender:0.1.0
+      cmd: ./tcpsender 192.168.50.1 5555
+      sub:
+
+          - name: validator
+            type: dall
+
+          - name: validator_all
+            type: dall
+
+          - name: xml_gen
+            type: dall
+
+          - name: json_gen
+            type: dall
+
+          - name: signer
+            type: dall
+
+          - name: word_count
+            type: dall
+
+          - name: letter_count
+            type: dall
+
+          - name: word_dublicate
+            type: dall
+

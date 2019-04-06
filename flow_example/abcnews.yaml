@@ -1,0 +1,74 @@
+name: abcnews
+func:
+    - name: validator
+      image: validator:0.1.0
+      cmd: ./validator [0-9]{7},*
+
+    - name: word_dublicate
+      image: word_dublicate:0.1.0
+      cmd: python ./word_dublicate.py 2
+      sub: 
+          - name: validator
+            filter: "tag:matched,2017"
+            type: sone
+
+    - name: word_count
+      image: word_count:0.1.0
+      cmd: nodejs ./word_count.js 5
+      sub: 
+          - name: validator
+            filter: "tag:matched,2007"
+            type: sone
+
+    - name: letter_counter
+      image: letter_counter:0.1.0
+      cmd: ./letter_counter 10
+      sub: 
+          - name: validator
+            filter: "200"
+            type: sone
+
+    - name: validator_all
+      image: validator_all:0.1.0
+      cmd: ./validator [0-9]{7},*
+      sub: 
+          - name: letter_counter
+            filter: "no"
+            type: sone
+
+          - name: validator
+            filter: "no"
+            type: sone
+
+    - name: xml_gen
+      image: xml_gen:0.1.0
+      cmd: python xml_gen.py 0
+      sub: 
+          - name: word_dublicate
+            filter: "no"
+            type: sone
+
+          - name: letter_counter
+            filter: "no"
+            type: sone
+
+    - name: json_gen
+      image: xml_gen:0.1.0
+      cmd: python json_gen.py 0
+      sub: 
+          - name: word_count
+            filter: "no"
+            type: sone
+
+    - name: signer
+      image: signer:0.1.0
+      cmd: java -cp bin org.main.Gen
+      sub: 
+          - name: json_gen
+            filter: "no"
+            type: sone
+
+          - name: xml_gen
+            filter: "no"
+            type: sone
+
