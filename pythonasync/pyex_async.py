@@ -46,7 +46,7 @@ def add_input(input_queue):
 
 def process(args):
 
-    msg = args
+    msg, stime = args
 
     log("start working..")
     log("get message: " + msg)
@@ -55,14 +55,14 @@ def process(args):
 
     resp = msg
 
-    gevent.sleep(2)
+    gevent.sleep(int(stime))
 
     send(resp)
 
     log("message send: {} ".format(time.time() - _b))
 
 
-def main(num):
+def main(num, stime):
 
     pool = Pool(int(num))
 
@@ -79,7 +79,7 @@ def main(num):
         if not msg:
             break
 
-        g = pool.spawn(process, (msg))
+        g = pool.spawn(process, (msg, stime))
         g.link_exception(exception_callback)
 
 
@@ -92,4 +92,4 @@ def exception_callback(g):
         send(exc)
 
 if __name__ == "__main__":
-    main(sys.argv[1])
+    main(sys.argv[1], sys.argv[2])
