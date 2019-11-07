@@ -36,12 +36,15 @@ def send(m):
 #  send - send message to world
 #  log  -  logging anything
 
-
 def add_input(input_queue):
 
     while True:
         msg = read()
-        input_queue.put(msg)
+
+        if msg == "stop_async_worker":
+            send(msg)
+        else:
+            input_queue.put(msg)
 
 
 def process(args):

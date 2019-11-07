@@ -3,4 +3,3 @@ func:
     - name: pyex_async
       image: pyex_async:0.1.0
       cmd: /usr/bin/python pyex_async.py 100 0
-      num: 2
