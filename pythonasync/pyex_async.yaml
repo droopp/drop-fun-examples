@@ -1,5 +1,5 @@
 name: pyex_async
-prioriry: 1
+priority: 1
 func:
     - name: pyex_async
       image: pyex_async:0.1.0
