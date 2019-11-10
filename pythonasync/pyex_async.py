@@ -57,7 +57,11 @@ def process(args):
 
     _b = time.time()
 
-    msg = json.loads(msg)
+    # <0.652.0>:a77ca57c-0105-4366-897b-ea326f8d5545@192.168.50.6:<0.486.0>:1573:429363:10167::{"res_code":201}
+
+    params = msg.split("::")
+
+    msg = json.loads(params[1])
 
     gevent.sleep(int(stime))
 
@@ -67,7 +71,7 @@ def process(args):
     else:
         resp = msg
 
-    send(resp)
+    send("{}::{}".format(params[0], json.dumps(resp)))
 
     log("message send: {} ".format(time.time() - _b))
 
