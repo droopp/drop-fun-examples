@@ -7,6 +7,7 @@ import time
 
 import threading
 import Queue
+import json
 
 from gevent import monkey
 from gevent.pool import Pool
@@ -56,9 +57,15 @@ def process(args):
 
     _b = time.time()
 
-    resp = msg
+    msg = json.loads(msg)
 
     gevent.sleep(int(stime))
+
+    if msg.get("xcode") is not None:
+        resp = {"res_code": msg.get("xcode"), "res_body": msg}
+
+    else:
+        resp = msg
 
     send(resp)
 
