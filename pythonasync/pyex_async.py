@@ -63,13 +63,20 @@ def process(args):
 
     msg = json.loads(params[1])
 
+    # _uri = msg.get("uri")
+    # _headers = msg.get("headers")
+    # _method = msg.get("method")
+    # _args = msg.get("args")
+
+    _data = msg.get("data")
+
     gevent.sleep(int(stime))
 
-    if msg.get("xcode") is not None:
-        resp = {"res_code": msg.get("xcode"), "res_body": msg}
+    if _data.get("xcode") is not None:
+        resp = {"x_res_code": _data.get("xcode"), "x_res_body": _data}
 
     else:
-        resp = msg
+        resp = _data
 
     send("{}::{}".format(params[0], json.dumps(resp)))
 
