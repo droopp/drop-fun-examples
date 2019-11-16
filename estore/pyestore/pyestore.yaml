@@ -1,0 +1,8 @@
+name: pyestore
+priority: 1
+func:
+    - name: pyestore_async
+      image: pyestore_async:0.1.0
+      cmd: /usr/bin/python async.py 100
+      memory: 20
+      timeout: 60
