@@ -3,6 +3,6 @@ priority: 1
 func:
     - name: jestore_async
       image: jestore_async:0.1.0
-      cmd: java -Xmx50M -cp bin:lib/* org.rt.worker.Worker 100
+      cmd: java -cp bin:lib/* org.rt.worker.Worker 100
       memory: 80
       timeout: 60
