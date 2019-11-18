@@ -1,4 +1,4 @@
-name: jestore
+name: jestore_async
 priority: 1
 func:
     - name: jestore_async
