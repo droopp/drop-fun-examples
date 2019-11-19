@@ -4,5 +4,5 @@ func:
     - name: jestore_async
       image: jestore_async:0.1.0
       cmd: java -cp bin:lib/* org.rt.worker.Worker 100
-      memory: 80
+      memory: 50
       timeout: 60
