@@ -28,12 +28,11 @@ public class Producer implements Runnable {
                 msg = api.read();
 
                 if(msg.equals("")){
-                    System.exit(0);
+                    break;
 
                 }else if(msg.equals("stop_async_worker")){
-
                     api.send(msg);
-                    System.exit(0);
+                    break;
 
                 }else{
                     api.log("received msg: " + msg);
@@ -42,6 +41,7 @@ public class Producer implements Runnable {
 
             }
 
+            System.exit(0);
 
         }catch (InterruptedException e){
             System.exit(0);

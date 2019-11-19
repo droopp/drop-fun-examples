@@ -20,14 +20,14 @@ public class Worker{
         }catch(Exception e){}
 
         //start producer
-        Thread t0 = new Thread(new Producer(api, queue));
-        t0.start();
+        Thread p = new Thread(new Producer(api, queue));
+        p.start();
 
         //start tasks
         for (int i = 1; i <= num; i++)
         {
-            Thread t = new Thread(new Consumer(api, queue));
-            t.start();
+            Thread c = new Thread(new Consumer(api, queue));
+            c.start();
 
         }
 
