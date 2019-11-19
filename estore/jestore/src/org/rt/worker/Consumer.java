@@ -27,7 +27,11 @@ public class Consumer implements Runnable {
             JSONObject headers = obj.getJSONObject("headers");
             String method = obj.getString("method");
             JSONObject args = obj.getJSONObject("args");
-            String data = obj.getString("data");
+
+            String data = null;
+            if (obj.has("data")){
+                data = obj.getString("data");
+            };
 
             String res = null;
 
@@ -53,7 +57,10 @@ public class Consumer implements Runnable {
 
         }catch (Exception e){
 
-            String err = "{\"x_res_code\":500, \"x_res_body\":\"" + e.getMessage() + "\"}";
+
+            api.log(e.getMessage());
+
+            String err = "{\"x_res_code\":500, \"x_res_body\":\"" + e.getMessage().replaceAll("\"", "'") + "\"}";
 
             api.send(parts[0] + "::" + new JSONObject(err));
 
@@ -80,7 +87,9 @@ public class Consumer implements Runnable {
 
             }
 
-        }catch (InterruptedException e){}
+        }catch (InterruptedException e){
+            System.exit(0);
+        }
 
     }
 }

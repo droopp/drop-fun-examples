@@ -12,7 +12,7 @@ public class Actor{
     }
 
     public Boolean hasNext(){
-        return s.hasNextLine();
+        return s.hasNext();
     }
 
     public String read(){
