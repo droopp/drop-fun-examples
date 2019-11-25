@@ -1,10 +1,13 @@
+from estore import get_events_by_device
 
 
-def get(uri, headers, args, data):
-    return 1
+def get(session, uri, headers, args, data):
+
+    if uri == "/api/pyestore_async/events":
+        return get_events_by_device(session, args)
 
 
-def post(uri, headers, args, data):
+def post(session, uri, headers, args, data):
     return 2
 
 

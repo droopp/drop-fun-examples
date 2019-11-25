@@ -2,7 +2,7 @@ name: pyestore_async
 priority: 1
 func:
     - name: pyestore_async
-      image: pyestore_async:0.1.0
-      cmd: /usr/bin/python async.py 100
-      memory: 20
-      timeout: 60
+      image: --network host pyestore_async:0.1.0
+      cmd: /usr/bin/python async.py 100 cassandra-1.staging.vc.restr.im,cassandra-2.staging.vc.restr.im,cassandra-3.staging.vc.restr.im estore,estore,estore123
+      memory: 50
+      timeout: 50

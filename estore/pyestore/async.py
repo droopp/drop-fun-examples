@@ -11,10 +11,25 @@ import json
 
 import handler
 
+from cassandra.cluster import Cluster
+from cassandra.policies import DCAwareRoundRobinPolicy
+# from cassandra.policies import RoundRobinPolicy
+
+from cassandra.auth import PlainTextAuthProvider
+# from cassandra import ConsistencyLevel
+# from cassandra.query import BatchStatement
+# from cassandra.query import SimpleStatement
+# from cassandra import ReadTimeout
+
 from gevent import monkey
 from gevent.pool import Pool
 
 monkey.patch_all(thread=True,  sys=True)
+
+
+# CASS_URL = ['cassandra-1.staging.vc.restr.im',
+#             'cassandra-2.staging.vc.restr.im',
+#             'cassandra-3.staging.vc.restr.im']
 
 
 # API
@@ -38,6 +53,30 @@ def send(m):
 #  send - send message to world
 #  log  -  logging anything
 
+
+def get_session(hosts, k, l, p):
+
+    while True:
+
+        try:
+
+            auth_provider = PlainTextAuthProvider(username=l, password=p)
+
+            cluster = Cluster(hosts,
+                              auth_provider=auth_provider,
+                              load_balancing_policy=DCAwareRoundRobinPolicy(local_dc='dc1')
+                              )
+
+            session = cluster.connect(k)
+
+            return session
+
+        except Exception as e:
+            log("Error during connection to cluster: {}".format(e))
+            time.sleep(2)
+            exit(1)
+
+
 def add_input(input_queue):
 
     while True:
@@ -51,7 +90,7 @@ def add_input(input_queue):
 
 def process(args):
 
-    msg = args
+    session, msg = args
 
     log("get message: " + msg)
 
@@ -73,9 +112,9 @@ def process(args):
 
         resp = ""
         if _method == 'get':
-            resp = handler.get(_uri, _headers, _args, _data)
+            resp = handler.get(session, _uri, _headers, _args, _data)
         elif _method == 'post':
-            resp = handler.post(_uri, _headers, _args, _data)
+            resp = handler.post(session, _uri, _headers, _args, _data)
         elif _method == 'put':
             resp = handler.put(_uri, _headers, _args, _data)
         elif _method == 'patch':
@@ -92,7 +131,12 @@ def process(args):
                                                     "x_res_body": str(e)})))
 
 
-def main(num):
+def main(num, hosts, klp):
+
+    cass_urls = hosts.split(",")
+    _klp = klp.split(",")
+
+    session = get_session(cass_urls, _klp[0], _klp[1], _klp[2])
 
     pool = Pool(int(num))
 
@@ -107,9 +151,10 @@ def main(num):
         msg = input_queue.get()
 
         if not msg:
+            time.sleep(1)
             break
 
-        g = pool.spawn(process, (msg))
+        g = pool.spawn(process, (session, msg))
         g.link_exception(exception_callback)
 
 
@@ -122,4 +167,4 @@ def exception_callback(g):
         send(exc)
 
 if __name__ == "__main__":
-    main(sys.argv[1])
+    main(sys.argv[1], sys.argv[2], sys.argv[3])
