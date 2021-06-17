@@ -1,0 +1,5 @@
+name: pathq
+func:
+    - name: pathq
+      image: pathq:0.1.0
+      cmd: /usr/bin/python3 pathq.py
