@@ -4,7 +4,5 @@ func:
       image: tcpsender:0.1.0
       cmd: ./tcpsender 192.168.50.10 5555
       sub:
-
           - name: pathq
             type: dall
-            filter: "8"
