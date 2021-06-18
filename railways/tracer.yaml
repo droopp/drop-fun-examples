@@ -7,3 +7,4 @@ func:
 
           - name: pathq
             type: dall
+            filter: '"8"'
